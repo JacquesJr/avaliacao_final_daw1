@@ -1,0 +1,48 @@
+body{
+    font-family: verdana;
+}
+input{
+    background-color: #f2f2f2;
+    color: #666;
+    height: 24px;
+    font-size: 14px;
+}
+
+h1, h2{
+    color:rgb(48,40,120);
+}
+
+.comment{
+    background-color: #f2f2f2;
+    padding: 2px 3px;
+    margin-bottom: 10px;
+}
+
+.user{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.user .date{
+    margin-left: 15px;
+}
+
+.hidden{
+    display: none;
+}
+
+textarea.content{
+    border: none; width: 100%; resize: none;
+}
+
+textarea.content:disabled{
+    background-color: transparent;
+}
+
+textarea.content:enabled{
+    background-color: white;
+}
+
+button{
+    margin-right: 5px;
+}

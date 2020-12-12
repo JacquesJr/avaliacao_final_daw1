@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Criação de Comentários</title>
+
+        <link rel="stylesheet" href="/css/style.css"/>
+        <script type="text/javascript" src="../javascript/jquery-lib.js"></script>
+        <script type="text/javascript" src="../javascript/post-jquery.js"></script>
+    </head>
+    <body>
+        <form id="search">
+            <input id="content-search" type="text" name="content-search" value=""/>
+            <input type="button" value="Buscar" onclick="Posts.findAll()"/>
+        </form>
+        <h1>Poste aqui seu comentário!</h1>
+        <form >
+            <textarea type="text" id="content" name="content" value="" rows="10" cols="100"></textarea>
+            <br/>
+            <select id="users" name="userId"></select>
+            <!--<input type="text" id="firstname" name="firstname" value=""/>
+            <input type="text" id="lastname" name="lastname" value=""/>-->
+            <input type="button" value="Enviar" onclick="Posts.add();"/>
+        </form>
+        <section>
+            <h2>Comentários</h2>
+            <div id="comments">
+            </div>
+        </section>
+    </body>
+</html>
