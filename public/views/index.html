@@ -1,30 +1,75 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Criação de Comentários</title>
+  <head>
+    <title>Trabalhe Conosco!</title>
 
-        <link rel="stylesheet" href="/css/style.css"/>
-        <script type="text/javascript" src="../javascript/jquery-lib.js"></script>
-        <script type="text/javascript" src="../javascript/post-jquery.js"></script>
-    </head>
-    <body>
-        <form id="search">
-            <input id="content-search" type="text" name="content-search" value=""/>
-            <input type="button" value="Buscar" onclick="Posts.findAll()"/>
-        </form>
-        <h1>Poste aqui seu comentário!</h1>
-        <form >
-            <textarea type="text" id="content" name="content" value="" rows="10" cols="100"></textarea>
-            <br/>
-            <select id="users" name="userId"></select>
-            <!--<input type="text" id="firstname" name="firstname" value=""/>
-            <input type="text" id="lastname" name="lastname" value=""/>-->
-            <input type="button" value="Enviar" onclick="Posts.add();"/>
-        </form>
-        <section>
-            <h2>Comentários</h2>
-            <div id="comments">
-            </div>
-        </section>
-    </body>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script type="text/javascript" src="../javascript/jquery-lib.js"></script>
+    <script type="text/javascript" src="../javascript/post-jquery.js"></script>
+  </head>
+  <body>
+      <section class="container">
+        <nav id="menu">
+            <ul>
+              <li> <a href="/">Cadastro</a> </li>
+              <li> <a href="/consulta">Consulta</a></li>
+            </ul>
+        </nav>
+      </section>
+
+    <div class="container col-8">
+      <form>
+        <div class="form-group col-6">
+          <label for="InputNome" >Nome </label>
+          <input
+            type="nome"
+            class="form-control"
+            id="InputNome"
+            placeholder="Digite seu nome"
+          />
+        </div>
+        <div class="form-group col-6">
+          <label for="InputPai">Nome do Pai </label>
+          <input
+            type="pai"
+            class="form-control"
+            id="InputPai"
+            placeholder="Digite o nome do seu pai"
+          />
+        </div>
+        <div class="form-group col-6">
+          <label for="InputMae">Nome da Mãe </label>
+          <input
+            type="mae"
+            class="form-control"
+            id="InputMae"
+            placeholder="Digite o nome da sua mãe"
+          />
+        </div>
+        <div class="form-group">
+          <label for="InputEmail">Email </label>
+          <input
+            type="email"
+            class="form-control col-md-6"
+            id="InputEmail"
+            placeholder="Digite seu email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="InputTelefone">Telefone </label>
+          <input
+            type="telefone"
+            class="form-control"
+            id="InputTelefone"
+            placeholder="Digite seu telefone"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </body>
 </html>

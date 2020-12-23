@@ -2,7 +2,7 @@ const { Sequelize } = require("./../configs/sequelize")
 const db = require("./../configs/sequelize")
 const {Model, DataTypes} = db.Sequelize
 
-const User = require('./../user/model')
+const User = require('./../alunos/model')
 
 const sequelize = db.sequelize
 

@@ -1,7 +1,7 @@
 const db = require('./../configs/sequelize')
 const Post = require('./model')
 
-const User = require('./../user/model')
+const User = require('./../alunos/model')
 const { Op } = db.Sequelize
 
 exports.create = (req, res) => {

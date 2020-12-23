@@ -162,7 +162,7 @@ User = {
 
         $.ajax({
             type : "GET",
-            url: "/usuarios",
+            url: "/alunos",
             success: User.loadAll,
             dataType : "json"
         })

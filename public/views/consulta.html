@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./../css/style.css" type="text/css" />
+    <script src="../javascript/jquery-lib.js"></script>
+    <script src="../javascript/post.js"></script>
+
+</head>
+
+<body>
+    <section class="container">
+        <nav id="menu">
+            <ul>
+                <li> <a href="/">Cadastro</a> </li>
+                <li> <a href="/consulta">Consulta</a></li>
+            </ul>
+        </nav>
+    </section>
+    <br><br>
+    <section class="container">
+        <label for="InputNome" class="col-sm-3 col-md-2 control-label">Nome:</label>
+        <input type="text" name="Nome" id="Nome" class="form-control" placeholder="Preencha o nome do aluno " required>
+        <br>
+        <button id="btnEnvia" class="btn btn-primary" onclick="Usuarios.consultaNomeDataCPF()">
+            Buscar
+        </button>
+
+
+        </div>
+    </section>
+</body>
+
+</html>
