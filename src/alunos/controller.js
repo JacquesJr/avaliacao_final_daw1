@@ -1,29 +1,44 @@
+const { sequelize } = require("./../configs/sequelize")
 const db = require("../configs/sequelize")
-const User = require("./model")
+const Alunos = require("./model")
 
 exports.create = (req, res) => {
-    User.create({
-        firstname : req.body.firstname,
-        lastname : req.body.lastname
-    }).then((user) => {
-        res.send(user)
+    Alunos.create({
+        nome : req.body.nome,
+        pai : req.body.pai,
+        mae : req.body.mae,
+        email : req.body.email,
+        telefone : req.body.telefone,
+    }).then((alunos) => {
+        res.send(alunos)
     })
 }
 
 exports.findAll = (req, res) => {
-    User.findAll().then( users => {
-        res.send(users)
+    Alunos.findAll().then( alunos => {
+        res.send(alunos)
     })
 }
 
-exports.filterAluno = (req, res) => {
-    User.findOne({
+exports.findByName = (req, res) => {
+    Alunos.findOne({
         where: {
-            Nome: req.body.Nome
+            nome: req.body.nome
         }
     }).then((data) => {
         res.send(data)
     }).catch((err) => {
         console.log(err)
     })
+}
+
+exports.remove = (req, res) => {
+    Alunos.destroy({
+        where: {
+            nome: req.body.nome
+        }
+    }).then(() => {
+        res.send('Aluno Excluido')
+    })
+
 }

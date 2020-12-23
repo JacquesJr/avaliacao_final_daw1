@@ -14,7 +14,6 @@ db.sequelize.sync({alter : true}).then(() => {
 })
 
 require('./src/alunos/routes')(app)
-require('./src/post/routes')(app)
 
 app.get("/", (req, res)=>{
     res.sendFile(__dirname + "/public/views/index.html")

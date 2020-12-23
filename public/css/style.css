@@ -46,3 +46,30 @@ textarea.content:enabled{
 button{
     margin-right: 5px;
 }
+
+a:link, a:visited {
+	text-decoration: none;
+}
+
+#menu li {
+	float: left;
+	list-style-type: none;
+	padding: 15px 150px 15px 150px;
+	background: #45097c;
+	
+}
+
+#menu li a:link, #menu li a:visited {
+		color:white;
+        font-size: 1.1em;
+        padding: 5px 43px 0 43px;
+    }
+
+#menu li:hover, #menu li:active {
+    background-color: #320858;
+    transition: 0.2s
+}
+
+.table{
+    margin-top: 20px;
+}

@@ -3,8 +3,8 @@ const {Model, DataTypes} = db.Sequelize
 
 const sequelize = db.sequelize
 
-class User extends Model {}
-User.init({
+class Alunos extends Model {}
+Alunos.init({
     nome : {
         type : DataTypes.STRING
     },
@@ -22,4 +22,4 @@ User.init({
     }
 }, {sequelize, modelName : "alunos"})
 
-module.exports = User
+module.exports = Alunos

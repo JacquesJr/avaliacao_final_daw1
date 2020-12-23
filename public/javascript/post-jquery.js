@@ -1,17 +1,24 @@
-Posts = {
-
+Alunos = {
     add : () => {
-
-        var t = {};
-        t.content = $("#content").val();
-        t.userId = $("#users").val();
+        var dado = {};
+        dado.nome = $("#InputNome").val();
+        dado.pai = $("#InputPai").val();
+        dado.mae = $("#InputMae").val();
+        dado.email = $("#InputEmail").val();
+        dado.telefone = $("#InputTelefone").val();
 
         $.ajax({
             type : 'POST',
-            url : '/post',
-            data : t,
+            url : '/alunos',
+            data : dado,
             dataType : 'json',
-            success : Posts.template
+            success : () => {
+                console.log(dado);
+                alert("Inserido com sucesso!");
+                setTimeout(() => {
+                    window.location.href = '/'
+                }, 2000); 
+            }
         })
 
         return false;
@@ -19,62 +26,24 @@ Posts = {
 
     },
 
-    template : (data) => {
+    template : (data) =>{
+        $('#tabelaConsulta').append(`<tr>
+        <td class="nome">${data.nome}</td>
+        <td>${data.pai}</td>
+        <td>${data.mae}</td>
+        <td>${data.email}</td>
+        <td>${data.telefone}</td>
+        <td><button class="btn btn-primary btnEditar">Editar</button>
+            <button class="btn btn-primary btnExcluir">Excluir</button>
+        <td></tr>`);
 
-        var comment = $('<div></div>')
-            .attr('id', 'comment-' + data.id)
-            .attr('class', 'comment');
+        $('.btnEditar').on("click", (event) =>{
+            Alunos.update(event.target);
+        })
 
-        var content = $('<textarea></textatrea>')
-            .attr('class', 'content')
-            .attr('disabled', true)
-            .html(data.content);
-
-        var user = $('<p></p>').attr('class', 'user');
-
-        if(data.user){
-            user.html('Por ' + data.user.firstname + " " + data.user.lastname);
-        }else{
-            user.html('Por ' + $("#users option:selected").text());
-        }
-            
-
-        var dtCreation = new Date(data.createdAt);
-        dtCreation = (dtCreation.getDate() < 10 ? "0" + dtCreation.getDate() : dtCreation.getDate()) + 
-                        "/" + ((dtCreation.getMonth() + 1) < 10 ? "0" + (dtCreation.getMonth() + 1) : (dtCreation.getMonth() + 1)) + 
-                        "/" + dtCreation.getFullYear();
-
-        var date = $('<span></span>')
-            .attr('class', 'date')
-            .html(dtCreation);
-
-
-        var btnEdit = $('<button></button>').attr('class', 'edit').html('Editar');
-        var btnSave = $('<button></button>').attr('class', 'save hidden').html('Salvar');
-        var btnRemove =  $('<button></button>').attr('class', 'remove').html('Remover');
-
-        $(btnEdit).on('click', (event) => {
-            Posts.enableEdit(event.target);
-        });
-
-        $(btnSave).on('click', (event) => {
-            Posts.update(event.target);
-        });
-
-        $(btnRemove).on('click', (event) => {
-            Posts.remove(event.target);
-        });
-
-        $(user).append(date);
-
-        $(comment).append(content);
-        $(comment).append(user);
-        $(comment).append(btnEdit);
-        $(comment).append(btnSave);
-        $(comment).append(btnRemove);
-
-        $("#comments")
-        $("#comments").append(comment);
+        $('.btnExcluir').on("click", (event) =>{
+            Alunos.remove(event.target);
+        })
 
     },
 
@@ -82,29 +51,18 @@ Posts = {
 
         $.ajax({
             type : "GET",
-            url : '/post',
-            data : {content : $("#content-search").val()},
+            url: "/consultas",
             success : (data) => {
-                $("#comments").empty();
-               for(var post of data){
-                   Posts.template(post);
+               for(var aluno of data){
+                   Alunos.template(aluno);
                } 
             },
             error : () => {
                 console.log("Ocorreu um erro!");
             },
-            dataType : 'json'
+            dataType : "json"
         })
 
-    },
-
-    enableEdit : (button) => {
-
-        var comment = $(button).parent();
-
-        $(comment).children('textarea').prop('disabled', false);
-        $(comment).children('button.edit').hide();
-        $(comment).children('button.save').show();
     },
 
     update : (button) => {
@@ -134,17 +92,14 @@ Posts = {
     },
 
     remove : (button) => {
-
-        var comment = $(button).parent();
-
-        var id = $(comment).attr('id').replace('comment-', '');
-
+        var nome = button.parentElement.parentElement.getElementsByClassName('nome')[0].innerText;
+        console.log(nome)
         $.ajax({
             type : "DELETE",
-            url : '/post',
-            data : {'id' : id},
-            success : (data) => {
-               $(comment).remove();
+            url : '/deletar',
+            data : {'nome' : nome},
+            success : () => {
+               alert(valNome + " Removido com sucesso!")
             },
             error : () => {
                 console.log("Ocorreu um erro!");
@@ -153,36 +108,28 @@ Posts = {
         })
 
 
-    }
+    },
 
-}
+    findByName : (event) => {
 
-User = {
-    findAll : () => {
-
+        const nome = $('#filterNome').val();
         $.ajax({
             type : "GET",
-            url: "/alunos",
-            success: User.loadAll,
+            url: "/consultas",
+            data: { "nome": nome},
+            success: (dados) =>{
+                $('#tabelaConsulta')[0].innerHTML = ""
+                Alunos.template(dados)
+            },
+            error: () =>{
+                alert('Nenhum dado encontrado');
+            },
             dataType : "json"
         })
 
     },
-
-    loadAll : (data) => {
-
-        var userCombo = $("#users");
-
-        for(user of data){
-            userCombo.append($('<option></option>').attr('value', user.id).html(user.firstname + ' ' + user.lastname));
-        }
-
-    }
 }
 
 $(document).ready(()=>{
-
-    User.findAll();
-
-    Posts.findAll();
+    Alunos.findAll();
 });
