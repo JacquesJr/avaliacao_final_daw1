@@ -18,15 +18,6 @@ h1, h2{
     margin-bottom: 10px;
 }
 
-.user{
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.user .date{
-    margin-left: 15px;
-}
-
 .hidden{
     display: none;
 }
@@ -55,7 +46,7 @@ a:link, a:visited {
 	float: left;
 	list-style-type: none;
 	padding: 15px 150px 15px 150px;
-	background: #45097c;
+	background: #666;
 	
 }
 
@@ -66,10 +57,26 @@ a:link, a:visited {
     }
 
 #menu li:hover, #menu li:active {
-    background-color: #320858;
+    background-color: rgb(78, 76, 76);
     transition: 0.2s
 }
 
 .table{
     margin-top: 20px;
+    color: #fff;
+}
+
+.container{
+    background-color: #666;
+    padding-bottom: 10px;
+}
+
+.form-group{
+    margin-bottom: 0px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+label{
+    color: #fff;
 }

@@ -27,6 +27,7 @@ Alunos = {
     },
 
     template : (data) =>{
+
         $('#tabelaConsulta').append(`<tr>
         <td class="nome">${data.nome}</td>
         <td>${data.pai}</td>
@@ -53,6 +54,7 @@ Alunos = {
             type : "GET",
             url: "/consultas",
             success : (data) => {
+               $('#tabelaConsulta')[0].innerHTML = ""
                for(var aluno of data){
                    Alunos.template(aluno);
                } 
@@ -93,13 +95,13 @@ Alunos = {
 
     remove : (button) => {
         var nome = button.parentElement.parentElement.getElementsByClassName('nome')[0].innerText;
-        console.log(nome)
+        
         $.ajax({
             type : "DELETE",
-            url : '/deletar',
+            url : '/consultaAluno',
             data : {'nome' : nome},
-            success : () => {
-               alert(valNome + " Removido com sucesso!")
+            success : (data) => {
+               alert("Aluno: " + data + " removido com sucesso!")
             },
             error : () => {
                 console.log("Ocorreu um erro!");
@@ -115,8 +117,8 @@ Alunos = {
         const nome = $('#filterNome').val();
         $.ajax({
             type : "GET",
-            url: "/consultas",
-            data: { "nome": nome},
+            url: "/consultaAluno",
+            data:{'nome': nome },
             success: (dados) =>{
                 $('#tabelaConsulta')[0].innerHTML = ""
                 Alunos.template(dados)

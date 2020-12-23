@@ -7,10 +7,10 @@ module.exports = (app) => {
 
     //Busca todos os alunos
     app.get('/consultas', controller.findAll)
+    
+    //Achar um aluno
+    app.get('/consultaAluno', controller.findByName)
 
-    //Busca todos os alunos
-    app.get('/deletar', controller.remove)
-
-    //Busca todos os alunos
-    app.get('/consultas', controller.findByName)
+    //Remove um aluno
+    app.delete('/consultaAluno', controller.remove)
 }

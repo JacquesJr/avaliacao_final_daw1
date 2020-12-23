@@ -20,13 +20,15 @@
             </ul>
         </nav>
     </section>
-    <br><br>
     <section class="container">
-        <label for="filterNome" class="col-sm-3 col-md-2 control-label">Nome:</label>
+        <label for="filterNome" class="col-sm-3 col-md-2 control-label">Filtre pelo nome:</label>
         <input type="text" name="Nome" id="filterNome" class="form-control" placeholder="Preencha o nome do aluno " required>
         <br>
         <button id="btnEnvia" class="btn btn-primary" onclick="Alunos.findByName()">
             Buscar
+        </button>
+        <button id="btnRetira" class="btn btn-primary" onclick="Alunos.findAll()">
+            Tirar Filtro
         </button>
 
 

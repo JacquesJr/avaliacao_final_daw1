@@ -1,7 +1,10 @@
-const db = require("../configs/sequelize")
+const { Sequelize } = require("../configs/sequelize")
+const db = require("./../configs/sequelize")
 const {Model, DataTypes} = db.Sequelize
 
 const sequelize = db.sequelize
+
+
 
 class Alunos extends Model {}
 Alunos.init({

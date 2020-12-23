@@ -1,6 +1,7 @@
-const { sequelize } = require("./../configs/sequelize")
-const db = require("../configs/sequelize")
-const Alunos = require("./model")
+const db = require('./../configs/sequelize')
+const Alunos = require('./model')
+const { Op } = db.Sequelize
+
 
 exports.create = (req, res) => {
     Alunos.create({
@@ -22,10 +23,9 @@ exports.findAll = (req, res) => {
 
 exports.findByName = (req, res) => {
     Alunos.findOne({
-        where: {
-            nome: req.body.nome
-        }
+        where: {nome: req.query.nome}
     }).then((data) => {
+        console.log
         res.send(data)
     }).catch((err) => {
         console.log(err)
@@ -35,7 +35,7 @@ exports.findByName = (req, res) => {
 exports.remove = (req, res) => {
     Alunos.destroy({
         where: {
-            nome: req.body.nome
+            nome: req.query.nome
         }
     }).then(() => {
         res.send('Aluno Excluido')
