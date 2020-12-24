@@ -35,7 +35,7 @@ exports.findByName = (req, res) => {
 exports.remove = (req, res) => {
     Alunos.destroy({
         where: {
-            nome: req.query.nome
+            nome: req.body.nome
         }
     }).then(() => {
         res.send('Aluno Excluido')

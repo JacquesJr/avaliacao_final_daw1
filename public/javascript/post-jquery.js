@@ -34,15 +34,15 @@ Alunos = {
         <td>${data.mae}</td>
         <td>${data.email}</td>
         <td>${data.telefone}</td>
-        <td><button class="btn btn-primary btnEditar">Editar</button>
-            <button class="btn btn-primary btnExcluir">Excluir</button>
+        <td><button id="btnEditar${data.nome}" class="btn btn-primary">Editar</button>
+            <button id="btnExcluir${data.nome}" class="btn btn-primary">Excluir</button>
         <td></tr>`);
 
-        $('.btnEditar').on("click", (event) =>{
+        $(`#btnEditar${data.nome}`).on("click", (event) =>{
             Alunos.update(event.target);
         })
 
-        $('.btnExcluir').on("click", (event) =>{
+        $(`#btnExcluir${data.nome}`).on("click", (event) =>{
             Alunos.remove(event.target);
         })
 
@@ -95,7 +95,7 @@ Alunos = {
 
     remove : (button) => {
         var nome = button.parentElement.parentElement.getElementsByClassName('nome')[0].innerText;
-        
+
         $.ajax({
             type : "DELETE",
             url : '/consultaAluno',
