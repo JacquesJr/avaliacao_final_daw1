@@ -80,3 +80,8 @@ a:link, a:visited {
 label{
     color: #fff;
 }
+
+textarea{
+    background-color: #fff0;
+    border-color: #666666;
+}

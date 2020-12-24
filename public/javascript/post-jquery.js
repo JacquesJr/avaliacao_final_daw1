@@ -13,7 +13,6 @@ Alunos = {
             data : dado,
             dataType : 'json',
             success : () => {
-                console.log(dado);
                 alert("Inserido com sucesso!");
                 setTimeout(() => {
                     window.location.href = '/'
@@ -28,25 +27,53 @@ Alunos = {
 
     template : (data) =>{
 
-        $('#tabelaConsulta').append(`<tr>
-        <td class="nome">${data.nome}</td>
-        <td>${data.pai}</td>
-        <td>${data.mae}</td>
-        <td>${data.email}</td>
-        <td>${data.telefone}</td>
-        <td><button id="btnEditar${data.nome}" class="btn btn-primary">Editar</button>
-            <button id="btnExcluir${data.nome}" class="btn btn-primary">Excluir</button>
-        <td></tr>`);
+        var row = $('<tr></tr>');
 
-        $(`#btnEditar${data.nome}`).on("click", (event) =>{
-            Alunos.update(event.target);
+        var rowNome = $('<td></td>')
+        .attr('class', 'nome')
+        .html(data.nome);
+
+        var rowPai = $('<td></td>')
+        .html(data.pai);
+
+        var rowMae = $('<td></td>')
+        .html(data.mae);
+
+        var rowEmail = $('<td></td>')
+        .html(data.email);
+
+        var rowTelefone = $('<td></td>')
+        .html(data.telefone);
+
+        console.log(rowTelefone)
+
+        var btnEditar = $('<button></button>').attr('class', 'edit btn btn-primary').html('Editar')
+        .attr('id', `btnEditar${data.nome}`);
+
+        var btnSalvar = $('<button></button>').attr('class', 'salvar hidden btn btn-primary').html('Salvar');
+        var btnExcluir =  $('<button></button>').attr('class', 'excluir btn btn-primary').html('Excluir')
+        .attr('id', `btnExcluir${data.nome}`);
+
+        $(btnEditar).on("click", (event) =>{
+            Alunos.findByNameEditar(event.target);
         })
 
-        $(`#btnExcluir${data.nome}`).on("click", (event) =>{
+        $(btnExcluir).on("click", (event) =>{
             Alunos.remove(event.target);
         })
 
+        $(row).append(rowNome);
+        $(row).append(rowPai);
+        $(row).append(rowMae);
+        $(row).append(rowEmail);
+        $(row).append(rowTelefone);
+        $(row).append(btnEditar);
+        $(row).append(btnSalvar);
+        $(row).append(btnExcluir);
+
+        $("#bodyConsulta").append(row);
     },
+
 
     findAll : () => {
 
@@ -54,7 +81,7 @@ Alunos = {
             type : "GET",
             url: "/consultas",
             success : (data) => {
-               $('#tabelaConsulta')[0].innerHTML = ""
+               $("#bodyConsulta").html('');
                for(var aluno of data){
                    Alunos.template(aluno);
                } 
@@ -69,29 +96,33 @@ Alunos = {
 
     update : (button) => {
 
-        var comment = $(button).parent();
-
-        var id = $(comment).attr('id').replace('comment-', '');
-        var content = $(comment).children('textarea').val();
+        var nome = button.parentElement.parentElement.getElementsByClassName('nome')[0].innerText;
 
         $.ajax({
             type : "PUT",
-            url : '/post',
-            data : {'content' : content, 'id' : id},
+            url : '/consultaAluno',
+            data : {'content' : content, 'nome' : nome},
             success : (data) => {
-               //quando der certo!!!
-                $(comment).children('textarea').prop('disabled', true);
-                $(comment).children('button.edit').show();
-                $(comment).children('button.save').hide();
+               alert("Aluno editado");
             },
             error : () => {
-                console.log("Ocorreu um erro!");
+                alert("Ocorreu um erro!");
             },
             dataType : 'json'
         })
 
 
     },
+
+    enableEdit : (button) => {
+
+        var row = $(button).parent();
+
+        $(row).children('textarea').prop('disabled', false);
+        $(row).children('button.edit').hide();
+        $(row).children('button.save').show();
+    },
+
 
     remove : (button) => {
         var nome = button.parentElement.parentElement.getElementsByClassName('nome')[0].innerText;
@@ -100,11 +131,10 @@ Alunos = {
             type : "DELETE",
             url : '/consultaAluno',
             data : {'nome' : nome},
-            success : (data) => {
-               alert("Aluno: " + data + " removido com sucesso!")
-            },
-            error : () => {
-                console.log("Ocorreu um erro!");
+            success : () => {
+                setTimeout(() => {
+                    window.location.href = '/'
+                }, 2000); 
             },
             dataType : 'json'
         })
@@ -113,14 +143,14 @@ Alunos = {
     },
 
     findByName : (event) => {
+        var nome = $('#filterNome').val();
 
-        const nome = $('#filterNome').val();
         $.ajax({
             type : "GET",
             url: "/consultaAluno",
             data:{'nome': nome },
             success: (dados) =>{
-                $('#tabelaConsulta')[0].innerHTML = ""
+                $("#bodyConsulta").html('');
                 Alunos.template(dados)
             },
             error: () =>{
@@ -130,6 +160,7 @@ Alunos = {
         })
 
     },
+
 }
 
 $(document).ready(()=>{

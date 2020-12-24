@@ -42,3 +42,21 @@ exports.remove = (req, res) => {
     })
 
 }
+
+exports.update = (req, res) => {
+
+    Alunos.update({
+        content: req.body.content,
+    }, {
+        where: {
+            nome: req.body.nome
+        }
+    }
+    ).then((data) => {
+        res.send(data)
+    }).catch((err) => {
+        console.log(err)
+    })
+
+
+}
