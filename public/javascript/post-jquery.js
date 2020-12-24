@@ -45,12 +45,9 @@ Alunos = {
         var rowTelefone = $('<td></td>')
         .html(data.telefone);
 
-        console.log(rowTelefone)
-
         var btnEditar = $('<button></button>').attr('class', 'edit btn btn-primary').html('Editar')
         .attr('id', `btnEditar${data.nome}`);
 
-        var btnSalvar = $('<button></button>').attr('class', 'salvar hidden btn btn-primary').html('Salvar');
         var btnExcluir =  $('<button></button>').attr('class', 'excluir btn btn-primary').html('Excluir')
         .attr('id', `btnExcluir${data.nome}`);
 
@@ -59,7 +56,7 @@ Alunos = {
         })
 
         $(btnExcluir).on("click", (event) =>{
-            Alunos.remove(event.target);
+            Alunos.remove(data.nome);
         })
 
         $(row).append(rowNome);
@@ -68,7 +65,6 @@ Alunos = {
         $(row).append(rowEmail);
         $(row).append(rowTelefone);
         $(row).append(btnEditar);
-        $(row).append(btnSalvar);
         $(row).append(btnExcluir);
 
         $("#bodyConsulta").append(row);
@@ -94,43 +90,12 @@ Alunos = {
 
     },
 
-    update : (button) => {
-
-        var nome = button.parentElement.parentElement.getElementsByClassName('nome')[0].innerText;
-
-        $.ajax({
-            type : "PUT",
-            url : '/consultaAluno',
-            data : {'content' : content, 'nome' : nome},
-            success : (data) => {
-               alert("Aluno editado");
-            },
-            error : () => {
-                alert("Ocorreu um erro!");
-            },
-            dataType : 'json'
-        })
-
-
-    },
-
-    enableEdit : (button) => {
-
-        var row = $(button).parent();
-
-        $(row).children('textarea').prop('disabled', false);
-        $(row).children('button.edit').hide();
-        $(row).children('button.save').show();
-    },
-
-
-    remove : (button) => {
-        var nome = button.parentElement.parentElement.getElementsByClassName('nome')[0].innerText;
+    remove : (valor) => {
 
         $.ajax({
             type : "DELETE",
             url : '/consultaAluno',
-            data : {'nome' : nome},
+            data : {'nome' : valor},
             success : () => {
                 setTimeout(() => {
                     window.location.href = '/'
