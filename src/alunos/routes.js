@@ -13,4 +13,7 @@ module.exports = (app) => {
 
     //Remove um aluno
     app.delete('/consultaAluno', controller.remove)
+    
+    //Editar um aluno
+    app.put('/consultaAluno', controller.edit)
 }

@@ -38,7 +38,19 @@ exports.remove = (req, res) => {
             nome: req.body.nome
         }
     }).then(() => {
-        res.send('Aluno Excluido')
+        res.send({
+            response: 'Aluno excluído com sucesso!'
+        })
+    })
+
+}
+
+exports.edit = (req, res) => {
+    Alunos.update(req.body, {where: {nome: req.body.nome}})
+    .then(() => {
+        res.send({
+            response: 'Aluno editado com sucesso!'
+        })
     })
 
 }

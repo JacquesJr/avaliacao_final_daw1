@@ -16,7 +16,7 @@ Alunos = {
                 alert("Inserido com sucesso!");
                 setTimeout(() => {
                     window.location.href = '/'
-                }, 2000); 
+                }, 1000); 
             }
         })
 
@@ -52,7 +52,7 @@ Alunos = {
         .attr('id', `btnExcluir${data.nome}`);
 
         $(btnEditar).on("click", (event) =>{
-            Alunos.findByNameEditar(event.target);
+            window.location.href = '/edit/' + data.nome
         })
 
         $(btnExcluir).on("click", (event) =>{
@@ -72,7 +72,6 @@ Alunos = {
 
 
     findAll : () => {
-
         $.ajax({
             type : "GET",
             url: "/consultas",
@@ -96,10 +95,11 @@ Alunos = {
             type : "DELETE",
             url : '/consultaAluno',
             data : {'nome' : valor},
-            success : () => {
+            success : (res) => {
+                alert(res.response);
                 setTimeout(() => {
-                    window.location.href = '/'
-                }, 2000); 
+                    window.location.href = '/consulta'
+                }, 1000); 
             },
             dataType : 'json'
         })
@@ -126,8 +126,52 @@ Alunos = {
 
     },
 
+    editValues : () => {
+        var queryStringNome = (window.location.pathname).split("/", 3)[2];
+        $.ajax({
+            type : "GET",
+            url: "/consultaAluno",
+            data:{'nome': queryStringNome },
+            success: (dados) =>{
+                $("#InputNome").val(dados.nome)
+                $("#InputPai").val(dados.pai)
+                $("#InputMae").val(dados.mae)
+                $("#InputEmail").val(dados.email);
+                $("#InputTelefone").val(dados.telefone);
+                console.log(dados)
+            },
+            error: () =>{
+                alert('Nenhum dado encontrado');
+            },
+            dataType : "json"
+        })
+    },
+
+    edit : (dados) => {
+        var dado = {};
+        dado.nome = $("#InputNome").val();
+        dado.pai = $("#InputPai").val();
+        dado.mae = $("#InputMae").val();
+        dado.email = $("#InputEmail").val();
+        dado.telefone = $("#InputTelefone").val();
+        $.ajax({
+            url: '/consultaAluno',
+            type: 'PUT',
+            data: dado,
+            success: (dados) => {
+                alert(dados.response);
+                setTimeout(() => {
+                    window.location.href = '/'
+                }, 1000); 
+            }
+          });
+    },
+
 }
 
 $(document).ready(()=>{
     Alunos.findAll();
+    if((window.location.pathname).split("/", 3)[1] == "edit"){
+        Alunos.editValues();
+    }
 });
