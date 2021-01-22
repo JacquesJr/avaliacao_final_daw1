@@ -12,14 +12,14 @@ module.exports = (app) => {
     app.post('/buscaCadastros', controller.findAll);
 
 
-    //Busca todos os eventos
+    //Busca por id
     app.post('/buscaId', controller.buscarId);
 
 
-    //Edita um evento
+    //Edita um cadastros
     app.put('/edicaoCadastro', controller.editar);
 
-    //remove um evento
+    //remove um cadastro
     app.delete('/excluirCadastro', controller.remover);
 
 
