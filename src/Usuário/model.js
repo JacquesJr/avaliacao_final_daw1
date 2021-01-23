@@ -4,17 +4,12 @@ const {Model, DataTypes} = db.Sequelize
 
 const sequelize = db.sequelize
 
-
-
-class Alunos extends Model {}
-Alunos.init({
+class Usuarios extends Model {}
+Usuarios.init({
     nome : {
         type : DataTypes.STRING
     },
-    pai : {
-        type: DataTypes.STRING
-    },
-    mae : {
+    ra : {
         type: DataTypes.STRING
     },
     email : {
@@ -22,7 +17,10 @@ Alunos.init({
     },
     telefone : {
         type: DataTypes.STRING
+    },
+    cargo : {
+        type: DataTypes.INTEGER
     }
-}, {sequelize, modelName : "alunos"})
+}, {sequelize, modelName : "usuarios"})
 
-module.exports = Alunos
+module.exports = Usuarios

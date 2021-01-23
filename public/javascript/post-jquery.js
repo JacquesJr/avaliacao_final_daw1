@@ -1,15 +1,15 @@
-Alunos = {
+Usuarios = {
     add : () => {
         var dado = {};
-        dado.nome = $("#InputNome").val();
-        dado.pai = $("#InputPai").val();
-        dado.mae = $("#InputMae").val();
-        dado.email = $("#InputEmail").val();
-        dado.telefone = $("#InputTelefone").val();
+        dado.nome = $("#nome").val();
+        dado.ra = $("#ra").val();
+        dado.email = $("#email").val();
+        dado.telefone = $("#telefone").val();
+        dado.cargo = $("#cargo").val();
 
         $.ajax({
             type : 'POST',
-            url : '/alunos',
+            url : '/usuarios',
             data : dado,
             dataType : 'json',
             success : () => {
@@ -25,60 +25,14 @@ Alunos = {
 
     },
 
-    template : (data) =>{
-
-        var row = $('<tr></tr>');
-
-        var rowNome = $('<td></td>')
-        .attr('class', 'nome')
-        .html(data.nome);
-
-        var rowPai = $('<td></td>')
-        .html(data.pai);
-
-        var rowMae = $('<td></td>')
-        .html(data.mae);
-
-        var rowEmail = $('<td></td>')
-        .html(data.email);
-
-        var rowTelefone = $('<td></td>')
-        .html(data.telefone);
-
-        var btnEditar = $('<button></button>').attr('class', 'edit btn btn-primary').html('Editar')
-        .attr('id', `btnEditar${data.nome}`);
-
-        var btnExcluir =  $('<button></button>').attr('class', 'excluir btn btn-primary').html('Excluir')
-        .attr('id', `btnExcluir${data.nome}`);
-
-        $(btnEditar).on("click", (event) =>{
-            window.location.href = '/edit/' + data.nome
-        })
-
-        $(btnExcluir).on("click", (event) =>{
-            Alunos.remove(data.nome);
-        })
-
-        $(row).append(rowNome);
-        $(row).append(rowPai);
-        $(row).append(rowMae);
-        $(row).append(rowEmail);
-        $(row).append(rowTelefone);
-        $(row).append(btnEditar);
-        $(row).append(btnExcluir);
-
-        $("#bodyConsulta").append(row);
-    },
-
-
     findAll : () => {
         $.ajax({
             type : "GET",
             url: "/consultas",
             success : (data) => {
                $("#bodyConsulta").html('');
-               for(var aluno of data){
-                   Alunos.template(aluno);
+               for(var user of data){
+                   Usuarios.template(user);
                } 
             },
             error : () => {
@@ -93,7 +47,7 @@ Alunos = {
 
         $.ajax({
             type : "DELETE",
-            url : '/consultaAluno',
+            url : '/consultaUsuario',
             data : {'nome' : valor},
             success : (res) => {
                 alert(res.response);
@@ -108,15 +62,13 @@ Alunos = {
     },
 
     findByName : (event) => {
-        var nome = $('#filterNome').val();
-
         $.ajax({
             type : "GET",
-            url: "/consultaAluno",
+            url: "/consultaUsuario",
             data:{'nome': nome },
             success: (dados) =>{
                 $("#bodyConsulta").html('');
-                Alunos.template(dados)
+                Usuarios.template(dados)
             },
             error: () =>{
                 alert('Nenhum dado encontrado');
@@ -130,7 +82,7 @@ Alunos = {
         var queryStringNome = (window.location.pathname).split("/", 3)[2];
         $.ajax({
             type : "GET",
-            url: "/consultaAluno",
+            url: "/consultaUsuario",
             data:{'nome': queryStringNome },
             success: (dados) =>{
                 $("#InputNome").val(dados.nome)
@@ -138,7 +90,6 @@ Alunos = {
                 $("#InputMae").val(dados.mae)
                 $("#InputEmail").val(dados.email);
                 $("#InputTelefone").val(dados.telefone);
-                console.log(dados)
             },
             error: () =>{
                 alert('Nenhum dado encontrado');
@@ -155,7 +106,7 @@ Alunos = {
         dado.email = $("#InputEmail").val();
         dado.telefone = $("#InputTelefone").val();
         $.ajax({
-            url: '/consultaAluno',
+            url: '/consultaUsuario',
             type: 'PUT',
             data: dado,
             success: (dados) => {
@@ -170,8 +121,5 @@ Alunos = {
 }
 
 $(document).ready(()=>{
-    Alunos.findAll();
-    if((window.location.pathname).split("/", 3)[1] == "edit"){
-        Alunos.editValues();
-    }
+    Usuarios.findAll();
 });
