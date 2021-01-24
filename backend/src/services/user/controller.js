@@ -35,8 +35,8 @@ module.exports = {
 
   async findOne(req, res) {
     try {
-      const { id } = req.params
-      
+      const { id } = req.body
+
       const user = await User.findOne({
         where: { id }
       })
