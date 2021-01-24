@@ -1,6 +1,10 @@
 import { FiClipboard, FiPlus, FiUser } from 'react-icons/fi';
 
+<<<<<<< HEAD
 import { Container, Option, Text, ImageLogo } from '../styles/Navbar';
+=======
+import { Container, Option, Text, ImageLogo } from '../styles/components/Navbar';
+>>>>>>> b85bc1f949fc11d2c3634e228731576edeec2222
 import IF from '../assets/IF.svg';
 
 const Navbar = () => {

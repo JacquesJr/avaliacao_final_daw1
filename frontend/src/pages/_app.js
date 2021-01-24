@@ -15,7 +15,11 @@ const MyApp = ({ Component, pageProps }) => {
       </Head>
       <GlobalStyle />
       <Container>
+<<<<<<< HEAD
         <Navbar/>
+=======
+        { false && <Navbar/>}
+>>>>>>> b85bc1f949fc11d2c3634e228731576edeec2222
         <Component {...pageProps}/>
       </Container>
     </>

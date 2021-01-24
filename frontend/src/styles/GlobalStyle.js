@@ -21,5 +21,17 @@ export default createGlobalStyle`
   }
   button {
     cursor: pointer;
+<<<<<<< HEAD
+=======
+    outline: none;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &:active {
+      filter: brightness(90%);
+    }
+>>>>>>> b85bc1f949fc11d2c3634e228731576edeec2222
   }
 `;
