@@ -9,7 +9,7 @@ eventRoutes.post('/', controller.create)
 eventRoutes.get('/', controller.findAll)
 
 //Busca todos os eventos
-eventRoutes.get('/:id', controller.findOne)
+eventRoutes.get('/:id', controller.findByUser)
 
 //Edita um evento
 eventRoutes.put('/:id', controller.update)

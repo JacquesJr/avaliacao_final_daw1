@@ -13,7 +13,7 @@ import { useAuth } from '../hooks/auth';
 import { useToast } from '../hooks/toast';
 
 const Home = () => {
-  const { token } = useAuth()
+  const { token, user } = useAuth()
   const { addToast } = useToast();
   const history = useRouter();
   const handleSubmit = useCallback(async ({ name, address, campus, inicialDate, finalDate, value }) => {
@@ -22,7 +22,10 @@ const Home = () => {
     const compareDates = compareDesc(new Date(inicial), new Date(final))
 
     if (compareDates < 0) {
-      console.log('Datas inicial maior que data final')
+      addToast({
+        type: 'error',
+        title: 'Datas inicial maior que data final',
+      });
     } else {
       try {
         await api.post('/events', {
@@ -31,6 +34,7 @@ const Home = () => {
           campus,
           inicialDate: formatISO(new Date(inicial)),
           finalDate: formatISO(new Date(final)),
+          owner_id: user.id,
           value
         }, {
           headers: {

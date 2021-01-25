@@ -1,9 +1,10 @@
 const Event = require("./model")
+const Register = require("../register/model")
 
 module.exports = {
   async create(req, res) {
     try {
-      const { name, address, campus, inicialDate, finalDate, value } = req.body
+      const { name, address, campus, inicialDate, finalDate, owner_id, value } = req.body
       const event = await Event.create({
         name,
         active: true,
@@ -11,6 +12,7 @@ module.exports = {
         campus,
         inicialDate,
         finalDate,
+        owner_id,
         value
       })
       
@@ -29,22 +31,26 @@ module.exports = {
     }
   },
 
-  async findOne(req, res) {
+  async findByUser(req, res) {
     try {
       const { id } = req.params;
   
-      const event = await Event.findOne({
+      const registers = await Register.findAll({
         where: {
-          id,
-          active: true,
+          user_id: id,
         }
       })
-
-      if (!event) {
+      if (!registers) {
         res.status(400).json({ message: 'Nenhum evento encontrado' })
       }
 
-      res.status(200).json(event)
+      const events = await Event.findAll({
+        where: {
+          id: registers.map(r => r.event_id)
+        }
+      })
+
+      res.status(200).json(events)
     } catch (err) {
       return res.status(400).json({ message: err.message })           
     }

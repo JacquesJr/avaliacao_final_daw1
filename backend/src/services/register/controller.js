@@ -16,26 +16,6 @@ module.exports = {
     }
   },
 
-  findOne(req, res) {
-    try {
-      const { id } = req.params;
-      Register.findOne({
-        where: {
-          id
-        }
-      }).then((register) => {
-        if (!register) {
-          res.status(400).json({ message: 'Registro não encontrado'});
-        }
-        res.status(200).json(register)
-      }).catch((err) => {
-        console.log(err)
-      })      
-    } catch (err) {
-      return res.status(400).json({ message: err.message })
-    }
-  },
-
   delete(req, res) {
     try {
       const { id } = req.params

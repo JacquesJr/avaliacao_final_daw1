@@ -35,6 +35,10 @@ Event.init({
     type: DataTypes.DATE,
     allowNull: false
   },
+  owner_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   value: {
     type: DataTypes.FLOAT,
     allowNull: false

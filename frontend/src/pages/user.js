@@ -8,13 +8,13 @@ import { useToast } from '../hooks/toast';
 import { useAuth } from '../hooks/auth';
 
 const Student = () => {
-  const { token } = useAuth()
+  const { token, user } = useAuth()
   const { addToast } = useToast();
   const [events, setEvents] = useState([]);
   
   useEffect(async () => {
     try {
-      const { data } = await api.get('/events', {
+      const { data } = await api.get(`/events/${user.id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
