@@ -4,12 +4,7 @@ const User = require('./model')
 module.exports = {
   async create(req, res) {
     try {
-      const { name, cpf, role, password } = req.body
-
-      if (role !== 'TEACHER' && role !== 'STUDENT') {
-        return res.status(400).json({ message: 'Cargo inválido' });
-      }
-
+      const { name, cpf, password } = req.body
       const checkUserExists = await User.findOne({ where: { cpf } });
 
       if (checkUserExists) {
@@ -21,7 +16,6 @@ module.exports = {
       const user = await User.create({
         name,
         cpf,
-        role,
         password: hashedPassword,
       })
 
