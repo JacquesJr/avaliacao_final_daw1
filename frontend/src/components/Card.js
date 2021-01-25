@@ -1,39 +1,11 @@
-import { useCallback } from 'react';
-import { FiTag, FiMapPin, FiCalendar, FiBook, FiDollarSign, FiCheckCircle } from 'react-icons/fi';
-import api from '../api';
+import { FiTag, FiMapPin, FiCalendar, FiBook, FiDollarSign, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import { useAuth } from '../hooks/auth';
-import { useToast } from '../hooks/toast';
 
 import { Container, Info, Text, Button, Content } from '../styles/components/Card';
 import { maskDate, maskCurrency } from '../utils';
 
-const Card = ({ data: { id, name, address, inicialDate, finalDate, campus, owner_id, value } }) => {
-  const { token, user } = useAuth()
-  const { addToast } = useToast();
-
-  const handleParticipateEvent = useCallback(() => {
-    try {
-      api.post('/registers', {
-        event_id: id,
-        user_id: user.id,
-        owner_id: owner_id,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      addToast({
-        type: 'success',
-        title: 'Parabéns! Você está participando do evento',
-      });
-    } catch (err) {
-      addToast({
-        type: 'error',
-        title: 'Erro ao participar do evento',
-      });
-      console.log(err)
-    }
-  }, []);
+const Card = ({ data: { id, name, address, inicialDate, finalDate, campus, owner_id, value }, status, onClick }) => {
+  const { user } = useAuth()
 
   return (
     <Container>
@@ -59,12 +31,28 @@ const Card = ({ data: { id, name, address, inicialDate, finalDate, campus, owner
           <Text>{maskCurrency(value)}</Text>
         </Info>
       </Content>
-      <Button onClick={() => {handleParticipateEvent()}}>
-        <button type="button">
-          <FiCheckCircle size={16} />
-          Quero participar
-        </button>
-      </Button>
+      {status && status === 'subscribed' ? (
+        <Button status={status} onClick={() => onClick(id, user.id, owner_id)}>
+          <button type="button">
+            <FiXCircle size={16} />
+            Cancelar participação
+          </button>
+        </Button>
+      ) : status === 'owner' ? (
+        <Button status={status} onClick={() => onClick(id, user.id, owner_id)}>
+          <button type="button">
+            <FiXCircle size={16} />
+            Cancelar evento
+          </button>
+        </Button>
+      ): (
+        <Button onClick={() => onClick(id, user.id, owner_id)}>
+          <button type="button">
+            <FiCheckCircle size={16} />
+            Quero participar
+          </button>
+        </Button>
+      )}
     </Container>
   );
 }

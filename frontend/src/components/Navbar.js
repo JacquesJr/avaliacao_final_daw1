@@ -12,15 +12,16 @@ const Navbar = () => {
   const history = useRouter();
   const { signOut } = useAuth();
   const { addToast } = useToast();
+  const { user } = useAuth()
 
   const handleSignOut = useCallback(() => {
-    signOut()
     history.push('/');
+    signOut()
     addToast({
       type: 'success',
       title: 'Deslogado com sucesso',
     });
-  }, []);
+  }, [signOut, addToast]);
 
   return (
     <Container>
@@ -32,7 +33,7 @@ const Navbar = () => {
       <Link href="/user">
         <Option>
           <FiUser size="1.8em" strokeWidth="0.833333" />
-          <Text>Márcio</Text>
+          <Text>{user && user.name ? user.name.split(' ')[0] : ''}</Text>
         </Option>
       </Link>
       <Link href="/register">

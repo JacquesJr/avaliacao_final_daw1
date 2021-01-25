@@ -1,20 +1,14 @@
 import { useCallback, useState } from 'react';
 import { Container, Option } from '../styles/components/Tab';
 
-const Tab = ({ options }) => {
-  const [isActive, setIsActive] = useState(0)
-
-  const handleActiveTab = useCallback((index) => {
-    setIsActive(index)
-  }, []);
-
+const Tab = ({ options, children, tab, onChange }) => {
   return (
     <Container>
       {options && options.length && options.map((option, index) => (
         <Option
           key={option}
-          isActive={isActive === index}
-          onClick={() => handleActiveTab(index)}
+          isActive={tab === index}
+          onClick={() => onChange(index)}
         >
           <span>{option}</span>
         </Option>

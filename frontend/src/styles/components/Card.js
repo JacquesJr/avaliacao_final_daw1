@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -50,6 +50,13 @@ export const Button = styled.div`
     border-radius: 4px;
     font-size: 10px;
     padding: 2px 4px;
+
+    ${props => 
+      (props.status === 'owner' || props.status === 'subscribed') && 
+        css`
+          background: #EF4444;
+          color: #FFF;
+        `}
   }
 
   svg {

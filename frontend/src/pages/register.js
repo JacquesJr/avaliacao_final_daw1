@@ -8,6 +8,7 @@ import { maskDate } from '../utils';
 import { Container } from '../styles/Register';
 import { FiBook, FiCalendar, FiDollarSign, FiMapPin, FiTag, FiCheckCircle } from 'react-icons/fi';
 import Input from '../components/Input';
+import InputMask from '../components/InputMask';
 import Button from '../components/Button';
 import { useAuth } from '../hooks/auth';
 import { useToast } from '../hooks/toast';
@@ -54,7 +55,7 @@ const Home = () => {
         console.log(err)
       }
     }
-  });
+  }, [user, token]);
 
   return (
     <Container>
@@ -63,28 +64,8 @@ const Home = () => {
           <Input name="name" placeholder="Nome do evento" icon={FiTag} />
           <Input name="address" placeholder="Endereço do evento" icon={FiMapPin} />
           <Input name="campus" placeholder="Campus" icon={FiBook} />
-          <Input
-            name="inicialDate"
-            placeholder="Data
-            inicial"
-            icon={FiCalendar}
-            onFocus={e => e.target.type = 'date'}
-            onBlur={e => {
-              e.target.type = 'text'
-              e.target.value = maskDate(e.target.value)
-            }}
-          />
-          <Input
-            name="finalDate"
-            placeholder="Data
-            final"
-            icon={FiCalendar}
-            onFocus={e => e.target.type = 'date'}
-            onBlur={e => {
-              e.target.type = 'text'
-              e.target.value = maskDate(e.target.value)
-            }}
-          />
+          <InputMask name="inicialDate" placeholder="Data inicial"icon={FiCalendar} mask="99/99/9999" />
+          <InputMask name="finalDate" placeholder="Data final" icon={FiCalendar} mask="99/99/9999" />
           <Input name="value" placeholder="Valor" icon={FiDollarSign} />
           <Button type="submit">
             <FiCheckCircle size={21} />

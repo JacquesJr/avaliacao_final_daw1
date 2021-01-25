@@ -16,3 +16,8 @@ export const Content = styled.div`
   justify-content: space-around;
   overflow-y: auto;
 `;
+
+export const Text = styled.h1`
+  font-weight: 300;
+  text-align: center;
+`;

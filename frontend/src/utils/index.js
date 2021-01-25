@@ -7,3 +7,15 @@ export const maskDate = (date) => {
 export const maskCurrency = (value) => {
   return value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 }
+
+export const filter = (arr, input) => {
+  if (arr && arr.length) {
+    const filtered = arr.filter(e => {
+      return e.name.toLowerCase().includes(input.toLowerCase())
+    })
+
+    return filtered;
+  }
+
+  return '';
+}
