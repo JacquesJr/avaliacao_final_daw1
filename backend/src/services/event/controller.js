@@ -46,6 +46,7 @@ module.exports = {
 
       const events = await Event.findAll({
         where: {
+          active: true,
           id: registers.map(r => r.event_id)
         }
       })

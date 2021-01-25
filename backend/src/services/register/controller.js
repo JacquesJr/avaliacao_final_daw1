@@ -16,17 +16,22 @@ module.exports = {
     }
   },
 
-  delete(req, res) {
+  async delete(req, res) {
     try {
-      const { id } = req.params
-      Register.destroy({
-        where: { id }
-      }).then((register) => {
-        if (!register) {
-          res.status(400).json({ message: 'Registro não encontrado'});
+      const { event_id, user_id, owner_id } = req.query
+
+      const register = await Register.destroy({
+        where: {
+          event_id,
+          user_id,
+          owner_id,
         }
-        res.status(200).json({ message: 'Cadastro excluido'});
-      })      
+      })
+      
+      if (!register) {
+        res.status(400).json({ message: 'Registro não encontrado'});
+      }
+      res.status(200).json({ message: 'Cadastro excluido'});
     } catch (err) {
       return res.status(400).json({ message: err.message })      
     }

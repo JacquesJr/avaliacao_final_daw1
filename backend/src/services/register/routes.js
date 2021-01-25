@@ -7,6 +7,6 @@ const registerRoutes = new express.Router();
 registerRoutes.post('/', controller.create);
 
 //remove um cadastro
-registerRoutes.delete('/:id', controller.delete);
+registerRoutes.delete('/', controller.delete);
 
 module.exports = registerRoutes
