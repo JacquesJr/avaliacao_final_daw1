@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
+import { Container, Content } from '../styles/User';
 
-import { useAuth } from '../hooks/auth';
-import api from '../api';
-import { Container, Content } from '../styles/Home';
+import Tab from '../components/Tab';
 import Card from '../components/Card';
-import SearchBar from '../components/SearchBar';
+import api from '../api';
 import { useToast } from '../hooks/toast';
+import { useAuth } from '../hooks/auth';
 
-const Home = () => {
+const Student = () => {
   const { token } = useAuth()
   const { addToast } = useToast();
   const [events, setEvents] = useState([]);
-
+  
   useEffect(async () => {
     try {
       const { data } = await api.get('/events', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
-      });  
-      setEvents(data)      
+      });
+      setEvents(data)
     } catch (err) {
       addToast({
         type: 'error',
@@ -31,12 +31,12 @@ const Home = () => {
 
   return (
     <Container>
-      <SearchBar />
-      <Content>
-        {events.map(event => <Card key={event.id} data={event} />)}
-      </Content>
+        <Tab options={['Eventos inscritos', 'Seus eventos']} />
+        <Content>
+          {events.map(event => <Card key={event.id} data={event} />)}
+        </Content>
     </Container>
-  )
-}
+  );
+};
 
-export default Home;
+export default Student

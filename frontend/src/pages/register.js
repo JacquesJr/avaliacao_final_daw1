@@ -1,20 +1,86 @@
+import { useCallback } from 'react';
+import { useRouter } from 'next/router'
+import { Form } from '@unform/web';
+import { compareDesc, formatISO } from 'date-fns';
+
+import api from '../api';
+import { maskDate } from '../utils';
 import { Container } from '../styles/Register';
 import { FiBook, FiCalendar, FiDollarSign, FiMapPin, FiTag, FiCheckCircle } from 'react-icons/fi';
-import { Form } from '@unform/web';
-
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { useAuth } from '../hooks/auth';
+import { useToast } from '../hooks/toast';
 
 const Home = () => {
+  const { token } = useAuth()
+  const { addToast } = useToast();
+  const history = useRouter();
+  const handleSubmit = useCallback(async ({ name, address, campus, inicialDate, finalDate, value }) => {
+    const inicial = inicialDate.split('/').reverse().join();
+    const final = finalDate.split('/').reverse().join();
+    const compareDates = compareDesc(new Date(inicial), new Date(final))
+
+    if (compareDates < 0) {
+      console.log('Datas inicial maior que data final')
+    } else {
+      try {
+        await api.post('/events', {
+          name,
+          address,
+          campus,
+          inicialDate: formatISO(new Date(inicial)),
+          finalDate: formatISO(new Date(final)),
+          value
+        }, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        history.push('/home')  
+        addToast({
+          type: 'success',
+          title: 'Evento adicionado com sucesso',
+        });      
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao adicionar o evento',
+        });  
+        console.log(err)
+      }
+    }
+  });
+
   return (
     <Container>
       <h1>Preencha os dados do evento</h1>
-      <Form onSubmit={(data) => {console.log({data})}}>
+      <Form onSubmit={handleSubmit}>
           <Input name="name" placeholder="Nome do evento" icon={FiTag} />
           <Input name="address" placeholder="Endereço do evento" icon={FiMapPin} />
           <Input name="campus" placeholder="Campus" icon={FiBook} />
-          <Input name="inicialDate" placeholder="Data inicial" icon={FiCalendar} />
-          <Input name="finalDate" placeholder="Data final" icon={FiCalendar} />
+          <Input
+            name="inicialDate"
+            placeholder="Data
+            inicial"
+            icon={FiCalendar}
+            onFocus={e => e.target.type = 'date'}
+            onBlur={e => {
+              e.target.type = 'text'
+              e.target.value = maskDate(e.target.value)
+            }}
+          />
+          <Input
+            name="finalDate"
+            placeholder="Data
+            final"
+            icon={FiCalendar}
+            onFocus={e => e.target.type = 'date'}
+            onBlur={e => {
+              e.target.type = 'text'
+              e.target.value = maskDate(e.target.value)
+            }}
+          />
           <Input name="value" placeholder="Valor" icon={FiDollarSign} />
           <Button type="submit">
             <FiCheckCircle size={21} />

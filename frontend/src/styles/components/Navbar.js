@@ -35,6 +35,10 @@ export const Option = styled.div`
     filter: brightness(0.8);
     background: #DDFFE250;
   }
+
+  &:nth-last-child(1) {
+    color: #ff6347;
+  }
 `;
 
 export const Text = styled.span`

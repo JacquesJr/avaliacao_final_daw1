@@ -1,27 +1,47 @@
-<<<<<<< HEAD
-const Home = () => {
-  return (
-    <div>
-      <h1>IFTM</h1>
-    </div>
-=======
 import Link from 'next/link';
 import { Form } from '@unform/web';
-import { FiCheckCircle, FiLock, FiLogIn, FiUser } from 'react-icons/fi';
+import { FiAward, FiCheckCircle, FiLock, FiLogIn } from 'react-icons/fi';
 
-import { Container, Content, Background } from '../styles/Home';
+import { useAuth } from '../hooks/auth';
+import { useToast } from '../hooks/toast';
+import { Container, Content, Background } from '../styles/Login';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { useCallback } from 'react';
+import { useRouter } from 'next/router';
 
 const Home = () => {
+  const history = useRouter();
+  const { signIn } = useAuth();
+  const { addToast } = useToast();
+  const handleSubmit = useCallback(async ({ cpf, password }) => {
+    try {
+      await signIn({
+        cpf,
+        password,
+      });     
+      history.push('/home')
+      addToast({
+        type: 'success',
+        title: 'Login efetuado com sucesso',
+      });
+    } catch (err) {
+      addToast({
+        type: 'error',
+        title: 'Erro ao fazer o login',
+      });
+      console.log(err)
+    }
+  }, [signIn])
+
   return (
     <Container>
       <Background />
       <Content>
-        <Form onSubmit={(data) => console.log(data)}>
+        <Form onSubmit={handleSubmit}>
           <h1>Faça seu login</h1>
 
-          <Input name="cpf" icon={FiUser} placeholder="CPF" />
+          <Input name="cpf" icon={FiAward} placeholder="CPF" />
 
           <Input
             name="password"
@@ -44,7 +64,6 @@ const Home = () => {
         </Form>
       </Content>
     </Container>
->>>>>>> b85bc1f949fc11d2c3634e228731576edeec2222
   )
 }
 

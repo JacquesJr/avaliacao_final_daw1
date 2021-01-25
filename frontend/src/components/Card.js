@@ -1,30 +1,31 @@
 import { FiTag, FiMapPin, FiCalendar, FiBook, FiDollarSign, FiCheckCircle } from 'react-icons/fi';
 
 import { Container, Info, Text, Button, Content } from '../styles/components/Card';
+import { maskDate, maskCurrency } from '../utils';
 
-const Card = () => {
+const Card = ({ data: { name, address, inicialDate, finalDate, campus, value } }) => {
   return (
     <Container>
       <Content>
         <Info>
           <FiTag size={20} strokeWidth="0.833333" />
-          <Text>Bsides São Paulo</Text>
+          <Text>{name}</Text>
         </Info>
         <Info>
           <FiMapPin size={20} strokeWidth="0.833333" />
-          <Text>R. Monte Alegre, 984 - Perdizes, São Paulo - SP</Text>
+          <Text>{address}</Text>
         </Info>
         <Info>
           <FiCalendar size={20} strokeWidth="0.833333" />
-          <Text>15/02/2020 - 21/02/2020</Text>
+          <Text>{maskDate(inicialDate)} - {maskDate(finalDate)}</Text>
         </Info>
         <Info>
           <FiBook size={20} strokeWidth="0.833333" />
-          <Text>Campus: IFTM - UPT</Text>
+          <Text>{campus}</Text>
         </Info>
         <Info>
           <FiDollarSign size={20} strokeWidth="0.833333" />
-          <Text>Bolsa: R$ 80/dia</Text>
+          <Text>{maskCurrency(value)}</Text>
         </Info>
       </Content>
       <Button>

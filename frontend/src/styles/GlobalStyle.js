@@ -21,8 +21,6 @@ export default createGlobalStyle`
   }
   button {
     cursor: pointer;
-<<<<<<< HEAD
-=======
     outline: none;
 
     &:hover {
@@ -32,6 +30,27 @@ export default createGlobalStyle`
     &:active {
       filter: brightness(90%);
     }
->>>>>>> b85bc1f949fc11d2c3634e228731576edeec2222
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #CCC;
+    border-radius: 3px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #52D863; 
+    border-radius: 3px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    opacity: 0.7;
   }
 `;

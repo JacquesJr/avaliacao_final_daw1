@@ -19,6 +19,7 @@ export const Container = styled.div`
     border: 0;
     color: #444;
     font-weight: 300;
+
     &::placeholder {
       color: #3FA14C;
       font-weight: 300;

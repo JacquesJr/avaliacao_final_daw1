@@ -28,7 +28,7 @@ export const Content = styled.div`
       }
 
       button {
-        margin-bottom: 24px;
+        margin-bottom: 81px;
       }
 
       h1 {
